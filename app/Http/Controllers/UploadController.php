@@ -29,8 +29,10 @@ class UploadController extends Controller
                 'errors' => $validator->errors()
             ]);
         }
-
-        // Storage::disk('google')->put($request->file('file'));
-        dd($request->file('file')->store("","google"));
+        // Store inGoogle Drive older
+        Storage::disk('google')->put( $request->file, $request->file);
+        // store localy
+        //Storage::disk('local')->put('public/files/' . $request->file, $request->file);
+        dd("Added");
     }
 }
