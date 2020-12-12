@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Storage;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('index');
 });
 
 Auth::routes();
@@ -27,9 +27,3 @@ Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 Route::get('/upload', [UploadController::class, 'index'])->name('files.create');
 Route::post('/upload', [UploadController::class, 'uploadToDrive'])->name('files.store');
-
-Route::get('test', function(){
-    Storage::disk('google')->put('test.txt', 'Hello World again');
-
-    dd("Added Successfuly");
-});
