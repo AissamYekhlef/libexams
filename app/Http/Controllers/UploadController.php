@@ -42,6 +42,7 @@ class UploadController extends Controller
         $client = new Google_Client(['verify' => false]);
         $client->setClientId(config('clientId'));
         $client->setClientSecret(config('clientSecret'));
+        $client->setAccessToken($client->getAccessToken());
         $client->refreshToken(config('refreshToken'));
 
         $service = new \Google_Service_Drive($client);
