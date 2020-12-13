@@ -33,7 +33,7 @@ class UploadController extends Controller
         $filename = $request->file('pdfile')->getClientOriginalName();
       
         // Store inGoogle Drive folder
-        $pathToFile = $request->pdfile->storeAs('files', $filename, 'google');
+        $pathToFile = $request->pdfile->storeAs(config('folderId'), $filename, 'google');
 
         // store localy
         // $pathToFile = $request->pdfile->storeAs('files', $filename, 'public');
