@@ -5,11 +5,11 @@
 <div class="container">
 
     <h1>Show File From Google Drive</h1>
-    <h3>{{ $fileId }}</h3>
+    {{-- <h3>{{ dd($file) }}</h3> --}}
+
     
 
-
-    <a href="https://drive.google.com/open?id=". $fileId target="_blank">open the pdf!</a>
+    <a href="https://drive.google.com/file/d/1TpvRPzsFgJl-qrk1N7uecGMwoBYwvijn/view" target="_blank">open the pdf!</a>
 
     <iframe data-src="https://drive.google.com/file/d/1TpvRPzsFgJl-qrk1N7uecGMwoBYwvijn/preview"
     {{-- src="{{ storage_path('app/public' . $file ) }}"  --}}
