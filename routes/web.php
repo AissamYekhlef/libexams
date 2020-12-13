@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UploadController;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
@@ -27,3 +28,7 @@ Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 Route::get('/upload', [UploadController::class, 'index'])->name('files.create');
 Route::post('/upload', [UploadController::class, 'uploadToDrive'])->name('files.store');
+
+Route::get('show',function(){
+    return view('files.show');
+});

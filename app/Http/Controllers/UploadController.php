@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use Response;
 
 class UploadController extends Controller
 {
@@ -21,7 +22,7 @@ class UploadController extends Controller
     public function uploadToDrive(Request $request)
     {
         $validator = Validator::make($request->all(),[
-            'file' => 'required'
+            'pdfile' => 'required'
         ]);
 
         if($validator->fails()){
@@ -29,10 +30,14 @@ class UploadController extends Controller
                 'errors' => $validator->errors()
             ]);
         }
-        // Store inGoogle Drive older
-        Storage::disk('google')->put( $request->file, $request->file);
+        $filename = $request->file('pdfile')->getClientOriginalName();
+      
+        // Store inGoogle Drive folder
+        $pathToFile = $request->pdfile->storeAs('files', $filename, 'google');
+
         // store localy
-        //Storage::disk('local')->put('public/files/' . $request->file, $request->file);
-        dd("Added");
+        // $pathToFile = $request->pdfile->storeAs('files', $filename, 'public');
+
+        return view('files.show')->with(['file'=>$pathToFile]);
     }
 }
