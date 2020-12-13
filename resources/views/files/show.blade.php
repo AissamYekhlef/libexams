@@ -5,7 +5,7 @@
 <div class="container">
 
     <h1>Show File From Google Drive</h1>
-    <h3>{{ $file }}</h3>
+    <h3>{{ $file->getId() }}</h3>
 
     <a href="https://drive.google.com/file/d/1TpvRPzsFgJl-qrk1N7uecGMwoBYwvijn/view" target="_blank">open the pdf!</a>
 
