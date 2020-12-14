@@ -36,9 +36,9 @@ class FileController extends Controller
         // store localy
         // $pathToFile = $request->pdfile->storeAs('files', $filename, 'public');
 
-        $url = Storage::disk('google')->url($pathToFile);
+        $url = Storage::disk('google')->path($pathToFile);
 
         return $url;
-        // return view('files.show')->with(['fileId'=>$url]);
+        // return view('files.show')->with(['url'=>$url]);
     }
 }
