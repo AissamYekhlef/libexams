@@ -9,11 +9,11 @@
 
     
 
-    <a href="{{ $url }}" target="_blank">open the pdf!</a>
+    <a href="https://drive.google.com/file/d/{{ $fileId }}/view" target="_blank">open the pdf!</a>
 
-    <iframe data-src="{{ $url }}"
+    <iframe data-src="https://drive.google.com/file/d/{{ $fileId }}/preview"
     {{-- src="{{ storage_path('app/public' . $file ) }}"  --}}
-    src="{{ $url }}"
+    src="https://drive.google.com/file/d/{{ $fileId }}/preview"
     type="application/pdf" style="width: 100%; height: 75vh">
     </iframe>
 

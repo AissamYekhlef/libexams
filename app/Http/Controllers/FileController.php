@@ -38,7 +38,19 @@ class FileController extends Controller
 
         $url = Storage::disk('google')->url($pathToFile);
 
+        $fileId = $this->get_string_between($url, 'id=', '&');
+
         // return $url;
-        return view('files.show')->with(['url'=>$url]);
+        return view('files.show')->with(['fileId'=>$fileId]);
     }
+
+    function get_string_between($string, $start, $end){
+        $string = ' ' . $string;
+        $ini = strpos($string, $start);
+        if ($ini == 0) return '';
+        $ini += strlen($start);
+        $len = strpos($string, $end, $ini) - $ini;
+        return substr($string, $ini, $len);
+    }
+    
 }
