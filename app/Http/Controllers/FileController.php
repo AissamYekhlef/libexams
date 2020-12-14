@@ -2,17 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Google_Client;
-use Google_Service_Drive_DriveFile;
-use Hypweb\Flysystem\GoogleDrive\GoogleDriveAdapter;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
-use Response;
 
-class UploadController extends Controller
+class FileController extends Controller
 {
-
     public function index(){
         return view('files.upload');
     }
@@ -41,6 +36,9 @@ class UploadController extends Controller
         // store localy
         // $pathToFile = $request->pdfile->storeAs('files', $filename, 'public');
 
-        return view('files.show')->with(['fileId'=>$pathToFile]);
+        $url = Storage::disk('public')->url($pathToFile);
+
+        return $url;
+        // return view('files.show')->with(['fileId'=>$url]);
     }
 }

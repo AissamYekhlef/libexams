@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\FileController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UploadController;
 use Illuminate\Http\Request;
@@ -26,8 +27,8 @@ Auth::routes();
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
-Route::get('/upload', [UploadController::class, 'index'])->name('files.create');
-Route::post('/upload', [UploadController::class, 'uploadToDrive'])->name('files.store');
+Route::get('/upload', [FileController::class, 'index'])->name('files.create');
+Route::post('/upload', [FileController::class, 'uploadToDrive'])->name('files.store');
 
 Route::get('show',function(){
     return view('files.show');
