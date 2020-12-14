@@ -9,11 +9,11 @@
 
     
 
-    <a href="https://drive.google.com/file/d/1TpvRPzsFgJl-qrk1N7uecGMwoBYwvijn/view" target="_blank">open the pdf!</a>
+    <a href="{{ $url }}" target="_blank">open the pdf!</a>
 
-    <iframe data-src="https://drive.google.com/file/d/1TpvRPzsFgJl-qrk1N7uecGMwoBYwvijn/preview"
+    <iframe data-src="{{ $url }}"
     {{-- src="{{ storage_path('app/public' . $file ) }}"  --}}
-    src="https://drive.google.com/file/d/1TpvRPzsFgJl-qrk1N7uecGMwoBYwvijn/preview"
+    src="{{ $url }}"
     type="application/pdf" style="width: 100%; height: 75vh">
     </iframe>
 
