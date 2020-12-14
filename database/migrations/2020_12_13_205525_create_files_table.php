@@ -16,11 +16,11 @@ class CreateFilesTable extends Migration
         Schema::create('files', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->boolean('confirmed');
-            $table->foreign('level_id')
+            $table->string('file_drive_id');
+            $table->boolean('confirmed')
+                    ->default(0);
+            $table->foreignId('level_id')
                     ->nullable()
-                    ->references('id')
-                    ->on('levels')
                     ->constrained('levels')
                     ->onDelete('cascade');
                     

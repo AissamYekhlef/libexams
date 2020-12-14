@@ -2,12 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\File;
+use App\Traits\HelpersTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class FileController extends Controller
 {
+    use HelpersTrait;
+
     public function index(){
         return view('files.upload');
     }
@@ -40,17 +44,28 @@ class FileController extends Controller
 
         $fileId = $this->get_string_between($url, 'id=', '&');
 
+        // TODO
+        // create a new File model ans save it with fileId 
+        $file = File::create([
+            'name' => $filename,
+            'file_drive_id' => $fileId,
+            'confirmed' => auth()->check() ? 1 : 0,
+            'created_by' => auth()->check() ? auth()->user()->id : NULL,
+        ]);
+
         // return $url;
-        return view('files.show')->with(['fileId'=>$fileId]);
+        return redirect()-> route('files.show', ['id' => $file->id]);
     }
 
-    function get_string_between($string, $start, $end){
-        $string = ' ' . $string;
-        $ini = strpos($string, $start);
-        if ($ini == 0) return '';
-        $ini += strlen($start);
-        $len = strpos($string, $end, $ini) - $ini;
-        return substr($string, $ini, $len);
+    public function show(Request $request){
+        
+        $file = File::where(
+            'id' , $request->id
+        )->first();
+
+        return view('files.show')->with(['file'=>$file]); 
     }
+
+
     
 }

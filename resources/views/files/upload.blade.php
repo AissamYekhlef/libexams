@@ -11,7 +11,7 @@
         <div class="alert alert-danger">{{ $error }}</div>
     @endforeach
 
-    <form action="/upload" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('files.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="form-group">
             <label for="exampleFormControlFile1">Choose file</label>

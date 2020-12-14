@@ -9,14 +9,21 @@ class File extends Model
 {
     use HasFactory;
 
-    public $year;
-    public $language;
+    protected $fillable = [
+        'name',
+        'file_drive_id',
+        'confirmed',
+        'created_by',
+        'description',
+        'year',
+        'language',
+    ];
 
     public function level(){
         return $this->belongTo(Level::class);
     }
 
     public function user(){
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class,'created_by', 'id');
     }
 }

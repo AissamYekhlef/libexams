@@ -2,11 +2,10 @@
 
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\UploadController;
-use Illuminate\Http\Request;
+use App\Models\File;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Storage;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,9 +26,18 @@ Auth::routes();
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
-Route::get('/upload', [FileController::class, 'index'])->name('files.create');
-Route::post('/upload', [FileController::class, 'uploadToDrive'])->name('files.store');
+Route::get('/files/upload', [FileController::class, 'index'])->name('files.create');
+Route::post('/files/upload', [FileController::class, 'uploadToDrive'])->name('files.store');
 
-Route::get('show',function(){
-    return view('files.show');
+// Route::get('show',function(){
+//     return view('files.show');
+// });
+
+Route::get('/files/show/{id}', [FileController::class, 'show'])->name('files.show');
+
+Route::get('test', function(){
+    dd(
+        // File::find(10)->user
+        User::find(3)->files
+    );
 });
