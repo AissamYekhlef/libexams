@@ -13,6 +13,13 @@ class FileController extends Controller
     use HelpersTrait;
 
     public function index(){
+
+        $files = File::all();
+
+        return view('files.index')->with('files', $files);
+    }
+
+    public function upload(){
         return view('files.upload');
     }
     /**
@@ -49,7 +56,7 @@ class FileController extends Controller
         $file = File::create([
             'name' => $filename,
             'file_drive_id' => $fileId,
-            'confirmed' => auth()->check() ? 1 : 0,
+            // 'confirmed' => auth()->check() ? 1 : 0,
             'created_by' => auth()->check() ? auth()->user()->id : NULL,
         ]);
 
@@ -66,6 +73,16 @@ class FileController extends Controller
         return view('files.show')->with(['file'=>$file]); 
     }
 
+    public function download(Request $request){
+        
+        $file = File::where(
+            'id' , $request->id
+        )->first();
+
+
+
+        return view('files.download')->with(['file'=>$file]); 
+    }
 
     
 }

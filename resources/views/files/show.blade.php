@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('title', 'Show - ' . $file->name)
+
+{{-- @section('mode', 'bg-dark') --}}
+
 @section('content')
     
 <div class="container">
@@ -9,7 +13,7 @@
 
     
 
-    <a href="https://drive.google.com/file/d/{{ $file->file_drive_id }}/view" target="_blank">open the pdf!</a>
+    <a href="{{ route('files.download', ['id' => $file->id]) }}" target="_blank">download the pdf!</a>
 
     <iframe data-src="https://drive.google.com/file/d/{{ $file->file_drive_id }}/preview"
     {{-- src="{{ storage_path('app/public' . $file ) }}"  --}}

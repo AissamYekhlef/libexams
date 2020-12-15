@@ -3,6 +3,7 @@
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\HomeController;
 use App\Models\File;
+use App\Models\Level;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -26,18 +27,23 @@ Auth::routes();
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
-Route::get('/files/upload', [FileController::class, 'index'])->name('files.create');
+
+
+Route::get('/files', [FileController::class, 'index'])->name('files.index');
+
+Route::get('/files/upload', [FileController::class, 'upload'])->name('files.create');
 Route::post('/files/upload', [FileController::class, 'uploadToDrive'])->name('files.store');
 
-// Route::get('show',function(){
-//     return view('files.show');
-// });
-
 Route::get('/files/show/{id}', [FileController::class, 'show'])->name('files.show');
+Route::get('/files/download/{id}', [FileController::class, 'download'])->name('files.download');
 
-Route::get('test', function(){
+
+
+Route::get('test/{id}', function($id){
     dd(
         // File::find(10)->user
-        User::find(3)->files
+        User::find($id)->name ?? 'no User with this ID',
+        User::find($id)->files->toArray() ?? 'no File with this ID',
+        User::find($id)->files->first()->level->toArray() ?? 'no Level with this ID'
     );
 });

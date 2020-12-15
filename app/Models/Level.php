@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Level extends Model
 {
     use HasFactory;
+    public $timestemp = false;
 
     public const LEVELS = [
         '0' => 'pre_primary',
@@ -31,4 +32,11 @@ class Level extends Model
         ],
         '4' => 'univercity',
     ];
+
+
+    protected $hidden = [
+        'created_at',
+        'updated_at',
+    ];
+
 }

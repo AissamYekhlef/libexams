@@ -14,13 +14,19 @@ class File extends Model
         'file_drive_id',
         'confirmed',
         'created_by',
+        'level_id',
         'description',
         'year',
         'language',
     ];
+    
+    protected $hidden = [
+        'created_at',
+        'updated_at',
+    ];
 
     public function level(){
-        return $this->belongTo(Level::class);
+        return $this->belongsTo(Level::class);
     }
 
     public function user(){
