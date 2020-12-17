@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\File;
+use App\Models\Level;
 use App\Traits\HelpersTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -14,6 +15,7 @@ class FileController extends Controller
 
     public function index(){
 
+        // $files = File::where('confirmed', 1)->get();
         $files = File::all();
 
         return view('files.index')->with('files', $files);
@@ -39,10 +41,12 @@ class FileController extends Controller
                 'errors' => $validator->errors()
             ]);
         }
-        $filename = $request->file('pdfile')->getClientOriginalName();
+        $filename = '';
+        $filename .= 'libexams.com-'; //the prefix for the files name
+        $filename .= $request->file('pdfile')->getClientOriginalName();
       
         // Store inGoogle Drive folder
-        $pathToFile = $request->pdfile->storeAs(config('folderId'), $filename, 'google');
+        $pathToFile = $request->pdfile->storeAs('', $filename, 'google');
 
         // store localy
         // $pathToFile = $request->pdfile->storeAs('files', $filename, 'public');
@@ -66,9 +70,11 @@ class FileController extends Controller
 
     public function show(Request $request){
         
-        $file = File::where(
-            'id' , $request->id
-        )->first();
+        $file = File::where('id' , $request->id)->first();
+
+        if(!$file){
+            return abort(404);
+        }
 
         return view('files.show')->with(['file'=>$file]); 
     }
@@ -79,9 +85,26 @@ class FileController extends Controller
             'id' , $request->id
         )->first();
 
-
-
         return view('files.download')->with(['file'=>$file]); 
+    }
+
+    public function search_form(){
+        
+    }
+
+    public function search(){
+        
+    }
+
+    public function get_files_by_level(Request $request){
+
+        $level = Level::where([
+            'name' => $request->name
+        ])->first();
+
+        $files = $level->files ?? [];
+
+        return view('files.index')->with('files', $files);
     }
 
     

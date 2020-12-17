@@ -3,11 +3,11 @@
 @section('title', 'Index - ')
 
 @section('content')
-    
+
 <div class="container">
 
     <h1>Show All Files</h1>
-
+    @if ($files)
     <div class="container-fluid">
         <table class="table table-bordered table-striped table-hover">
            <thead>
@@ -16,6 +16,7 @@
                   <th>Name</th>
                   <th>Year</th>
                   <th>Level</th>
+                  <th>Created By</th>
                   <th>Action</th>
               </tr>
             </thead>
@@ -25,10 +26,11 @@
                   <td> {{ $file->name }} </td>
                   <td> {{ $file->year }} </td>
                   <td> {{ $file->level->name ?? '' }} </td>
+                  <td> {{ $file->user->name ?? 'Guest' }} </td>
                   <td> 
                     <div class="dropdown">
-                        <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                          Action
+                        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                          More
                           <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
@@ -43,8 +45,12 @@
               </tr>
             @endforeach
         </table>
-    </div>
-
+    </div> 
+    @else  
+      <h3>
+          There are no files right now
+      </h3>
+    @endif
  
 
 </div>

@@ -27,15 +27,20 @@ Auth::routes();
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
-
-
 Route::get('/files', [FileController::class, 'index'])->name('files.index');
 
 Route::get('/files/upload', [FileController::class, 'upload'])->name('files.create');
 Route::post('/files/upload', [FileController::class, 'uploadToDrive'])->name('files.store');
 
-Route::get('/files/show/{id}', [FileController::class, 'show'])->name('files.show');
+Route::get('/files/read/{id}', [FileController::class, 'show'])->name('files.show');
 Route::get('/files/download/{id}', [FileController::class, 'download'])->name('files.download');
+
+// TODO
+// Route::get('/files/search', [FileController::class, 'search_form'])->name('files.search.form');
+// Route::post('/files/search', [FileController::class, 'search'])->name('files.search');
+
+Route::get('files/levels', [FileController::class, 'get_files_by_level'])->name('files.levels.name');
+// Route::post('/files/search', [FileController::class, 'search'])->name('files.search');
 
 
 
@@ -44,6 +49,7 @@ Route::get('test/{id}', function($id){
         // File::find(10)->user
         User::find($id)->name ?? 'no User with this ID',
         User::find($id)->files->toArray() ?? 'no File with this ID',
-        User::find($id)->files->first()->level->toArray() ?? 'no Level with this ID'
+        User::find($id)->files->first()->level->toArray() ?? 'no Level with this ID',
+        config('filesystems.disks.google.folders.bac')
     );
 });

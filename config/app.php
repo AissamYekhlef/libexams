@@ -230,4 +230,6 @@ return [
 
     ],
 
+    'google_folders' => 'filesystems.disks.google.folders',
+
 ];

@@ -39,4 +39,8 @@ class Level extends Model
         'updated_at',
     ];
 
+    public function files(){
+        return $this->hasMany(File::class);
+    }
+
 }
