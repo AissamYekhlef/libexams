@@ -44,4 +44,8 @@ class User extends Authenticatable
     public function files(){
         return $this->hasMany(File::class, 'created_by', 'id');
     }
+
+    public function level(){
+        return $this->belongsTo(Level::class);
+    }
 }

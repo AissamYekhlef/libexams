@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\UserController;
 use App\Models\File;
 use App\Models\Level;
 use App\Models\User;
@@ -28,6 +29,9 @@ Auth::routes();
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 Route::get('/files', [FileController::class, 'index'])->name('files.index');
+Route::get('/bac', function(){
+    return redirect()->route('files.levels.name', ['name' => 'bac']);
+});
 
 Route::get('/files/upload', [FileController::class, 'upload'])->name('files.create');
 Route::post('/files/upload', [FileController::class, 'uploadToDrive'])->name('files.store');
@@ -39,17 +43,23 @@ Route::get('/files/download/{id}', [FileController::class, 'download'])->name('f
 // Route::get('/files/search', [FileController::class, 'search_form'])->name('files.search.form');
 // Route::post('/files/search', [FileController::class, 'search'])->name('files.search');
 
-Route::get('files/levels', [FileController::class, 'get_files_by_level'])->name('files.levels.name');
+Route::get('files/levels/{name}', [FileController::class, 'get_files_by_level'])->name('files.levels.name');
+Route::get('files/levels/{name}/year', [FileController::class, 'get_files_by_level'])->name('files.levels.name.year');
 // Route::post('/files/search', [FileController::class, 'search'])->name('files.search');
 
-
+/**
+ * Users Routes
+ */
+Route::resource('/dash/users', UserController::class);
+// Route::get('/dash/users/{id}',[UserController::class, 'show'])->name('users.show');
 
 Route::get('test/{id}', function($id){
     dd(
         // File::find(10)->user
         User::find($id)->name ?? 'no User with this ID',
         User::find($id)->files->toArray() ?? 'no File with this ID',
-        User::find($id)->files->first()->level->toArray() ?? 'no Level with this ID',
-        config('filesystems.disks.google.folders.bac')
+        User::find($id)->files->last()->level->toArray() ?? 'no Level with this ID',
+        User::find($id)->level->toArray(),
+        Level::find(1)->users->toArray(),
     );
 });

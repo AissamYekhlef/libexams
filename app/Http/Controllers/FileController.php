@@ -16,7 +16,7 @@ class FileController extends Controller
     public function index(){
 
         // $files = File::where('confirmed', 1)->get();
-        $files = File::all();
+        $files = File::paginate(8);
 
         return view('files.index')->with('files', $files);
     }
@@ -98,13 +98,35 @@ class FileController extends Controller
 
     public function get_files_by_level(Request $request){
 
-        $level = Level::where([
-            'name' => $request->name
-        ])->first();
 
-        $files = $level->files ?? [];
+        $params =  [
+            'name' => $request->name,
+        ];
+
+        $level = Level::where($params)->first();
+
+        // dd(
+        //     $level->files()->where('year', '2020')->get()
+        // );
+
+        $files = $level->files()
+                        ->where('year', '2020')
+                        ->paginate(1);
 
         return view('files.index')->with('files', $files);
+    }
+
+    public function add_from_local(Request $request){
+
+        $file = File::create([
+            'name' => $request->name,
+            'file_drive_id' => $request->file_drive_id,
+            'created_by' => $request->created_by,
+        ]);
+
+        // return $url;
+        return redirect()-> route('files.show', ['id' => $file->id]);
+
     }
 
     
