@@ -162,8 +162,13 @@ class FileController extends Controller
             'name' => $request->name,
         ];
         $level = Level::where($params)->first();
-        $files = $level->files()
-                        ->paginate(8);
+        if($level->files){
+            $files = $level->files()
+            ->paginate(8);
+        }else{
+            $files = [];
+        }
+       
 
         return view('files.index')->with('files', $files);
     }
