@@ -8,7 +8,7 @@
 
     <h1>Show All Files</h1>
   
-    @include('files.form_search')
+    {{-- @include('files.form_search') --}}
 
     @if ($files->count())
     <div class="container-fluid">
@@ -37,9 +37,14 @@
                           <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                          <li><a href="{{ route('files.show',     ['id' => $file->id]) }}" class="btn"> Details </a> </li>
-                          <li><a href="{{ route('files.show',     ['id' => $file->id]) }}" class="btn"> Edit </a> </li>
-                          <li><a href="{{ route('files.show',     ['id' => $file->id]) }}" class="btn"> Delete </a> </li>
+                          <li><a href="{{ route('files.show', ['id' => $file->id]) }}" class="btn"> Details </a> </li>
+                          @auth
+                              @if (auth()->user()->isAdmin())
+                                <li><a href="{{ route('files.edit', ['id' => $file->id]) }}" class="btn"> Edit </a> </li>
+                                <li><a href="{{ route('files.delete', ['id' => $file->id]) }}" class="btn"> Delete </a> </li>
+                              @endif
+                          @endauth
+                        
                           <li><a href="{{ route('files.download', ['id' => $file->id]) }}" class="btn"> Download </a> </li>
                         </ul>
                       </div>                     

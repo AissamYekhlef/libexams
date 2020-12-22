@@ -41,6 +41,10 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function isAdmin(){
+        return $this->is_admin;
+    }
+
     public function files(){
         return $this->hasMany(File::class, 'created_by', 'id');
     }

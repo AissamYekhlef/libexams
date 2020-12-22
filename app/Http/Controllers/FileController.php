@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\File;
 use App\Models\Level;
 use App\Traits\HelpersTrait;
+use App\Traits\ServiceGoogleDriveTriat;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
@@ -12,10 +13,24 @@ use Illuminate\Support\Facades\Validator;
 class FileController extends Controller
 {
     use HelpersTrait;
+    use ServiceGoogleDriveTriat;
+
+    public function __construct(){
+        $this->middleware('admin', [
+                'except'=> [
+                    'index',
+                    'show',
+                    'download',
+                    'get_files_by_level',
+                    'upload',
+                    'uploadToDrive',
+                ]
+        ]);
+    }
 
     public function index(){
 
-        // $files = File::where('confirmed', 1)->get();
+        // $files = File::where('confirmed', 1)->paginate(4);
         $files = File::paginate(8);
 
         return view('files.index')->with('files', $files);
@@ -50,13 +65,11 @@ class FileController extends Controller
 
         // store localy
         // $pathToFile = $request->pdfile->storeAs('files', $filename, 'public');
-
+ 
         $url = Storage::disk('google')->url($pathToFile);
 
         $fileId = $this->get_string_between($url, 'id=', '&');
 
-        // TODO
-        // create a new File model ans save it with fileId 
         $file = File::create([
             'name' => $filename,
             'file_drive_id' => $fileId,
@@ -79,6 +92,43 @@ class FileController extends Controller
         return view('files.show')->with(['file'=>$file]); 
     }
 
+    public function edit($id){
+        $file = File::find($id);
+        if(!$file){
+            return abort(404);
+        }
+
+        return view('files.edit', ['file' => $file]);
+    }
+
+    public function update(Request $request){
+
+        $file = File::find($request->id);
+        if(!$file){
+            return abort(404);
+        }
+
+       $validator = Validator::make($request->all(),[
+           'name' => '',
+           'year' => '',
+           'confirmed' => '',
+           'description' => '',
+       ]);
+
+        $file->name = $request->name;
+        $file->year = $request->year;
+        $file->confirmed = $request->confirmed == 'on' ? 1 : 0;
+        $file->description = $request->description;
+  
+        $file->level_id = Level::where(['name' => $request->level])->first()->id;
+    //   dd(
+    //         $file->level
+    //     );
+        $file->save();
+
+        return redirect()->route('files.show', ['id' => $file->id]);
+    }
+
     public function download(Request $request){
         
         $file = File::where(
@@ -88,30 +138,32 @@ class FileController extends Controller
         return view('files.download')->with(['file'=>$file]); 
     }
 
-    public function search_form(){
-        
+    
+    public function destroy($id){
+        $file = File::find($id);
+        dd(
+            $this->service
+        );
+        $this->deleteFileFromDrive($file->file_drive_id);
+        $file->delete();
+        return redirect()->route('files.index');
     }
 
-    public function search(){
+    // public function search_form(){
         
-    }
+    // }
+
+    // public function search(){
+        
+    // }
 
     public function get_files_by_level(Request $request){
-
-
         $params =  [
             'name' => $request->name,
         ];
-
         $level = Level::where($params)->first();
-
-        // dd(
-        //     $level->files()->where('year', '2020')->get()
-        // );
-
         $files = $level->files()
-                        ->where('year', '2020')
-                        ->paginate(1);
+                        ->paginate(8);
 
         return view('files.index')->with('files', $files);
     }

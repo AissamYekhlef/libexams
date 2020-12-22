@@ -4,6 +4,7 @@ use App\Http\Controllers\FileController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
 use App\Models\File;
+use App\Models\GoogleClientApi;
 use App\Models\Level;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -39,6 +40,11 @@ Route::post('/files/upload', [FileController::class, 'uploadToDrive'])->name('fi
 Route::get('/files/read/{id}', [FileController::class, 'show'])->name('files.show');
 Route::get('/files/download/{id}', [FileController::class, 'download'])->name('files.download');
 
+Route::get('/files/{id}/edit', [FileController::class, 'edit'])->name('files.edit');
+Route::post('/files/{id}/update', [FileController::class, 'update'])->name('files.update');
+
+Route::get('/files/{id}/delete', [FileController::class, 'destroy'])->name('files.delete');
+
 // TODO
 // Route::get('/files/search', [FileController::class, 'search_form'])->name('files.search.form');
 // Route::post('/files/search', [FileController::class, 'search'])->name('files.search');
@@ -62,4 +68,10 @@ Route::get('test/{id}', function($id){
         User::find($id)->level->toArray(),
         Level::find(1)->users->toArray(),
     );
+});
+
+Route::get('files/confirmed', function(){
+    $files = File::where('confirmed', 1)->paginate(8);
+
+    return view('files.index')->with('files', $files);
 });
