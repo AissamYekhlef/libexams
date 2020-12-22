@@ -141,9 +141,6 @@ class FileController extends Controller
     
     public function destroy($id){
         $file = File::find($id);
-        dd(
-            $this->service
-        );
         $this->deleteFileFromDrive($file->file_drive_id);
         $file->delete();
         return redirect()->route('files.index');
