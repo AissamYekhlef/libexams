@@ -3,6 +3,7 @@
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\UserExportController;
 use App\Models\File;
 use App\Models\GoogleClientApi;
 use App\Models\Level;
@@ -50,15 +51,30 @@ Route::get('/files/{id}/delete', [FileController::class, 'destroy'])->name('file
 // Route::post('/files/search', [FileController::class, 'search'])->name('files.search');
 
 Route::get('files/levels/{name}', [FileController::class, 'get_files_by_level'])->name('files.levels.name');
-Route::get('files/levels/{name}/year', [FileController::class, 'get_files_by_level'])->name('files.levels.name.year');
+Route::get('files/levels/{name}/year', [FileController::class, 'get_files_by_level_and_year'])->name('files.levels.name.year');
 // Route::post('/files/search', [FileController::class, 'search'])->name('files.search');
+Route::get('files/confirmed', function(){
+    $files = File::where('confirmed', 1)->paginate(8);
+
+    return view('files.index')->with('files', $files);
+});
 
 /**
  * Users Routes
  */
-Route::resource('/dash/users', UserController::class);
-// Route::get('/dash/users/{id}',[UserController::class, 'show'])->name('users.show');
+Route::group([
+    'prefix' => 'admin',
+    // 'as' => 'admin.',
+], function(){
 
+    Route::resource('users', UserController::class);
+    Route::get('export/users', [UserExportController::class, 'export']);
+
+});
+
+
+
+// TESTS
 Route::get('test/{id}', function($id){
     dd(
         // File::find(10)->user
@@ -70,8 +86,11 @@ Route::get('test/{id}', function($id){
     );
 });
 
-Route::get('files/confirmed', function(){
-    $files = File::where('confirmed', 1)->paginate(8);
 
-    return view('files.index')->with('files', $files);
+Route::get('users/files', function(){
+    $users = User::with('files')->get();
+    dd(
+        $users
+    );
+    // return view('files.index')->with('files', $files);
 });

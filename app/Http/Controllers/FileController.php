@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\File;
 use App\Models\Level;
 use App\Traits\HelpersTrait;
-use App\Traits\ServiceGoogleDriveTriat;
+use App\Traits\ServiceGoogleDriveTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Validator;
 class FileController extends Controller
 {
     use HelpersTrait;
-    use ServiceGoogleDriveTriat;
+    use ServiceGoogleDriveTrait;
 
     public function __construct(){
         $this->middleware('admin', [
@@ -57,7 +57,7 @@ class FileController extends Controller
             ]);
         }
         $filename = '';
-        $filename .= 'libexams.com-'; //the prefix for the files name
+        // $filename .= 'libexams.com-'; //the prefix for the files name
         $filename .= $request->file('pdfile')->getClientOriginalName();
       
         // Store inGoogle Drive folder

@@ -28,7 +28,9 @@
 
     <iframe data-src="https://drive.google.com/file/d/{{ $file->file_drive_id }}/preview"
             src="https://drive.google.com/file/d/{{ $file->file_drive_id }}/preview"
-            type="application/pdf" style="width: 100%; height: 90vh">
+            type="application/pdf" 
+            style="width: 100%; height: 90vh; box-shadow: 0 2px 8px 0 rgba(63,69,81,0.16); border-radius:15px;" 
+            allowtransparency="true" allowfullscreen="true">
     </iframe>
 
 </div>

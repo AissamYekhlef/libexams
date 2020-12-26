@@ -6,7 +6,7 @@ use Exception;
 use Google_Client;
 use Hypweb\Flysystem\GoogleDrive\GoogleDriveAdapter;
 
-trait ServiceGoogleDriveTriat {
+trait ServiceGoogleDriveTrait {
     
     public $google_disk = 'filesystems.disks.google';
     public $drive_folder_id =  'folderId';

@@ -16,6 +16,7 @@
 @else
     <h1>Not found </h1>
 @endif
+
 </div>
 
 @endsection

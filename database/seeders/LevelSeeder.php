@@ -81,6 +81,10 @@ class LevelSeeder extends Seeder
         [
             'id' => '39',
             'name' => 'bac',
+        ],
+        [
+            'id' => '40',
+            'name' => 'univ',
         ]
     ];
 
