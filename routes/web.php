@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\FileController;
+use App\Http\Controllers\FileExportController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserExportController;
@@ -65,10 +66,12 @@ Route::get('files/confirmed', function(){
 Route::group([
     'prefix' => 'admin',
     // 'as' => 'admin.',
+    // 'middleware' => 'admin'
 ], function(){
 
     Route::resource('users', UserController::class);
     Route::get('export/users', [UserExportController::class, 'export']);
+    Route::get('export/files', [FileExportController::class, 'export']);
 
 });
 

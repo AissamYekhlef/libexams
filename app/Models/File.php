@@ -32,4 +32,10 @@ class File extends Model
     public function user(){
         return $this->belongsTo(User::class,'created_by', 'id');
     }
+
+    public function getLinkById(){
+        $link = 'http://libexams.local/files/read/' . $this->id;
+
+        return $link;
+    }
 }

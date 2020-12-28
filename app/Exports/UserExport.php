@@ -3,6 +3,7 @@
 namespace App\Exports;
 
 use App\Models\User;
+use DateTime;
 use Illuminate\Contracts\Support\Responsable;
 use Illuminate\Database\Eloquent\Collection;
 use Maatwebsite\Excel\Concerns\Exportable;
@@ -12,6 +13,7 @@ use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Maatwebsite\Excel\Concerns\WithEvents;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithMapping;
+use Maatwebsite\Excel\Concerns\WithTitle;
 use Maatwebsite\Excel\Events\AfterSheet;
 
 class UserExport implements 
@@ -20,9 +22,19 @@ class UserExport implements
     WithMapping, 
     WithHeadings,
     WithEvents,
+    WithTitle,
     FromQuery
 {
     use Exportable;
+
+    private $year;
+    private $month;
+
+    public function __construct(int $year, int $month)
+    {
+        $this->year = $year;
+        $this->month = $month;
+    }
 
 
     // public function collection()
@@ -35,7 +47,9 @@ class UserExport implements
 
     public function query()
     {
-        return User::query()->with('files', 'level');
+        return User::query()->with('files', 'level')
+                            ->whereYear('created_at', $this->year)
+                            ->whereMonth('created_at', $this->month);
     }
 
     public function map($user): array
@@ -52,7 +66,7 @@ class UserExport implements
 
     public function headings():array
     {
-        return[
+        return [
             'ID',
             'Name',
             'Email',
@@ -66,13 +80,18 @@ class UserExport implements
     {
         return[
             AfterSheet::class =>function(AfterSheet $event) {
-                $event->sheet->getStyle('A1:E1')->applyFromArray([
+                $event->sheet->getStyle('A1:F1')->applyFromArray([
                     'font' => [
                         'bold' => true
                     ],
                 ]);
             }
         ];
+    }
+
+    public function title(): string
+    {
+        return DateTime::createFromFormat('!m', $this->month)->format('F');
     }
     
 }

@@ -19,6 +19,7 @@
                   <th>Name</th>
                   <th>Year</th>
                   <th>Level</th>
+                  <th>Language</th>
                   <th>Created By</th>
                   <th>Action</th>
               </tr>
@@ -29,6 +30,7 @@
                   <td> {{ $file->name }} </td>
                   <td> {{ $file->year }} </td>
                   <td> {{ $file->level->name ?? '' }} </td>
+                  <td> {{ $file->language }} </td>
                   <td> {{ $file->user->name ?? 'Guest' }} </td>
                   <td> 
                     <div class="dropdown">
