@@ -14,7 +14,7 @@ trait ServiceGoogleDriveTrait {
     private $service ;
     private $adapter ;
 
-    public function __construct(){
+    public function define_google_client(){
 
         $client = new Google_Client();
         $client->setClientId( config( $this->google_disk . '.' .  'clientId'));
@@ -34,8 +34,8 @@ trait ServiceGoogleDriveTrait {
 
     public function deleteFileFromDrive($fileId) {
         try {
-          $service = $this->getGoogleService();  
-          $service->files->delete($fileId);
+        //   $this->service = $this->getGoogleService();  
+          $this->service->files->delete($fileId);
         } catch (Exception $e) {
           print "An error occurred: " . $e->getMessage();
         }

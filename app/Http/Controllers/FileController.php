@@ -26,6 +26,7 @@ class FileController extends Controller
                     'uploadToDrive',
                 ]
         ]);
+        $this->define_google_client();
     }
 
     public function index(){
