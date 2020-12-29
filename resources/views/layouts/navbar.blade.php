@@ -17,10 +17,28 @@
 
             <!-- Right Side Of Navbar -->
             <ul class="navbar-nav ml-auto">
-                
+                @auth
+                    @if (auth()->user()->isAdmin())
+                    <li class="nav-item dropdown">
+                        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                            {{ __('Users') }}
+                        </a>
+
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="{{ route('users.export') }}">
+                                {{ __('Export') }}
+                            </a>
+                            <a class="dropdown-item" href="{{ route('users.import') }}">
+                                {{ __('Import') }}
+                            </a>
+                        </div>
+                    </li>
+                    @endif
+                @endauth
+
                 <li class="nav-item dropdown">
                     <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                        {{ __('LEVELS') }}
+                        {{ __('Levels') }}
                     </a>
 
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">

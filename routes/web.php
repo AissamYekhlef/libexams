@@ -2,9 +2,11 @@
 
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\FileExportController;
+use App\Http\Controllers\FileImportController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserExportController;
+use App\Http\Controllers\UserImportController;
 use App\Models\File;
 use App\Models\GoogleClientApi;
 use App\Models\Level;
@@ -70,8 +72,11 @@ Route::group([
 ], function(){
 
     Route::resource('users', UserController::class);
-    Route::get('export/users', [UserExportController::class, 'export']);
-    Route::get('export/files', [FileExportController::class, 'export']);
+    Route::get('export/users', [UserExportController::class, 'export'])->name('users.export');
+    Route::get('export/files', [FileExportController::class, 'export'])->name('files.export');
+    // Route::get('export/files', [FileExportController::class, 'export'])->name('files.import');
+    Route::get('import/users', [UserImportController::class, 'show'])->name('users.import.form');
+    Route::post('import/users', [UserImportController::class, 'import'])->name('users.import');
 
 });
 
