@@ -72,11 +72,15 @@ Route::group([
 ], function(){
 
     Route::resource('users', UserController::class);
+    
     Route::get('export/users', [UserExportController::class, 'export'])->name('users.export');
-    Route::get('export/files', [FileExportController::class, 'export'])->name('files.export');
-    // Route::get('export/files', [FileExportController::class, 'export'])->name('files.import');
     Route::get('import/users', [UserImportController::class, 'show'])->name('users.import.form');
     Route::post('import/users', [UserImportController::class, 'import'])->name('users.import');
+
+
+    Route::get('export/files', [FileExportController::class, 'export'])->name('files.export');
+    Route::get('import/files', [FileImportController::class, 'show'])->name('files.import.form');
+    Route::post('import/files', [FileImportController::class, 'import'])->name('files.import');
 
 });
 
