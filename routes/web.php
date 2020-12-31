@@ -87,8 +87,14 @@ Route::group([
 
 
 // TESTS
-Route::get('test', function(){
-    
+Route::get('permissions/{role}', function($role){
+    dd(
+        Role::findByName($role)->permissions
+    );
+});
+
+Route::get('adminlte', function(){
+    return view('adminlte');
 });
 
 
