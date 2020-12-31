@@ -8,11 +8,11 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserExportController;
 use App\Http\Controllers\UserImportController;
 use App\Models\File;
-use App\Models\GoogleClientApi;
-use App\Models\Level;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
 
 /*
 |--------------------------------------------------------------------------
@@ -87,15 +87,8 @@ Route::group([
 
 
 // TESTS
-Route::get('test/{id}', function($id){
-    dd(
-        // File::find(10)->user
-        User::find($id)->name ?? 'no User with this ID',
-        User::find($id)->files->toArray() ?? 'no File with this ID',
-        User::find($id)->files->last()->level->toArray() ?? 'no Level with this ID',
-        User::find($id)->level->toArray(),
-        Level::find(1)->users->toArray(),
-    );
+Route::get('test', function(){
+    
 });
 
 

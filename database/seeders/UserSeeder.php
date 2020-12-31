@@ -16,18 +16,37 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        if (! User::where( ['email' => 'admin@admin.com'])->count() > 0){
-            User::factory()->create([
-                'name' => 'Admin',
-                'email' => 'admin@admin.com', // as Admin
+        if (! User::where( ['email' => 'super@admin.com'])->count() > 0){
+            $super_admin = User::factory()->create([
+                'name' => 'Super Admin',
+                'email' => 'super@admin.com', // as Admin
                 'is_admin' => true,
             ]);
+            $super_admin->assignRole('super-admin');
         }
-        if (! User::where( ['email' => 'aissam@swissdidata.com'])->count() > 0){
-            User::factory()->create([
-                'name' => 'Aissam',
-                'email' => 'aissam@swissdidata.com', // as User
+
+        if (! User::where( ['email' => 'admin@admin.com'])->count() > 0){
+            $admin = User::factory()->create([
+                'name' => 'Admin',
+                'email' => 'admin@admin.com', // as User
             ]);
+            $admin->assignRole('admin');
+        }
+
+        if (! User::where( ['email' => 'editor@gmail.com'])->count() > 0){
+            $editor = User::factory()->create([
+                'name' => 'Editor',
+                'email' => 'editor@gmail.com', // as Editor
+            ]);
+            $editor->assignRole('editor');
+        }
+        
+        if (! User::where( ['email' => 'viewer@gmail.com'])->count() > 0){
+            $editor = User::factory()->create([
+                'name' => 'Viewer',
+                'email' => 'viewer@gmail.com', // as Viewer
+            ]);
+            $editor->assignRole('viewer');
         }
         
         // User::factory()

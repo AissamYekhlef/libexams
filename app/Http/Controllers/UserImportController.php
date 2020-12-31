@@ -24,9 +24,9 @@ class UserImportController extends Controller
 
         $user_import = new UserImport;
         $user_import->import($file);
-        // dd(
-        //     $user_import
-        // );
+
+        // $user_import->import($file, null, \Maatwebsite\Excel\Excel::CSV); // From CSV file
+
         if ($user_import->failures()->isNotEmpty()) {
             return back()->withFailures($user_import->failures())
                         ->with('rows_count' , $user_import->getRowCount());

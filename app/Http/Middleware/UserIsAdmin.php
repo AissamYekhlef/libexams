@@ -19,7 +19,7 @@ class UserIsAdmin
     {
         $token = $request->token;
         if(Auth::check()){
-            if (!$request->user()->isAdmin()) {
+            if (!$request->user()->hasAnyRole('admin', 'super-admin')) {
                 return abort(401);
             }
         }else{

@@ -25,23 +25,9 @@ class FileImportController extends Controller
         // $file = $request->file('file')->storeAs('imports','users.xlsx'); // save file locally
 
         $file_import = new FileImport;
-    
-        // try{
-            $file_import->import($file);
-        
-        
-        
-        // Excel::load($file, function($reader){
-        //     dd(
-        //         $reader->getTitle()
-        //     );
-        // });
-        
 
-        // dd(
-        //     $file_import->failures()
-        // );
-
+        $file_import->import($file);
+        
         if ($file_import->failures()->isNotEmpty()) {
             return back()->withFailures($file_import->failures())
                         ->with('rows_count' , $file_import->getRowCount());

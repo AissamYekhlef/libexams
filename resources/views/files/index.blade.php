@@ -40,12 +40,14 @@
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
                           <li><a href="{{ route('files.show', ['id' => $file->id]) }}" class="btn"> Details </a> </li>
-                          @auth
-                              @if (auth()->user()->isAdmin())
-                                <li><a href="{{ route('files.edit', ['id' => $file->id]) }}" class="btn"> Edit </a> </li>
-                                <li><a href="{{ route('files.delete', ['id' => $file->id]) }}" class="btn"> Delete </a> </li>
-                              @endif
-                          @endauth
+                            
+                            @can('files.edit')
+                              <li><a href="{{ route('files.edit', ['id' => $file->id]) }}" class="btn"> Edit </a> </li>
+                            @endcan
+                            
+                            @can('files.delete')
+                              <li><a href="{{ route('files.delete', ['id' => $file->id]) }}" class="btn"> Delete </a> </li>
+                            @endcan
                         
                           <li><a href="{{ route('files.download', ['id' => $file->id]) }}" class="btn"> Download </a> </li>
                         </ul>
