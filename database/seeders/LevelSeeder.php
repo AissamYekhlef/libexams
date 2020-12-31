@@ -17,6 +17,10 @@ class LevelSeeder extends Seeder
     const LEVELS = [
         // Primary
         [
+            'id' => '0',
+            'name' => 'non',
+        ],
+        [
             'id' => '10',
             'name' => '0ap',
         ],

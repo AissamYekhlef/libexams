@@ -28,8 +28,8 @@ class UserImportController extends Controller
         //     $user_import
         // );
         if ($user_import->failures()->isNotEmpty()) {
-            return back()->withFailures($user_import->failures());
-                        // ->withStatus('Added' . )
+            return back()->withFailures($user_import->failures())
+                        ->with('rows_count' , $user_import->getRowCount());
         }
             
     

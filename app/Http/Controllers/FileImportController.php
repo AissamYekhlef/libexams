@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Imports\FileImport;
 use App\Models\File;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Excel;
 
 class FileImportController extends Controller
 {
@@ -24,11 +25,26 @@ class FileImportController extends Controller
         // $file = $request->file('file')->storeAs('imports','users.xlsx'); // save file locally
 
         $file_import = new FileImport;
-        $file_import->import($file);
+    
+        // try{
+            $file_import->import($file);
+        
+        
+        
+        // Excel::load($file, function($reader){
+        //     dd(
+        //         $reader->getTitle()
+        //     );
+        // });
+        
+
+        // dd(
+        //     $file_import->failures()
+        // );
 
         if ($file_import->failures()->isNotEmpty()) {
             return back()->withFailures($file_import->failures())
-                        ->with('files_count' , $file_import->getRowCount());
+                        ->with('rows_count' , $file_import->getRowCount());
         }
 
         if ($file_import->errors()->isNotEmpty()) {

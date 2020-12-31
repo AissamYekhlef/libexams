@@ -6,6 +6,7 @@ use App\Models\File;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\Importable;
+use Maatwebsite\Excel\Concerns\OnEachRow;
 use Maatwebsite\Excel\Concerns\SkipsErrors;
 use Maatwebsite\Excel\Concerns\SkipsFailures;
 use Maatwebsite\Excel\Concerns\SkipsOnError;
@@ -15,6 +16,7 @@ use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithValidation;
 use Maatwebsite\Excel\Validators\Failure;
+use phpDocumentor\Reflection\Types\Null_;
 
 class FileImport implements 
     ToModel,
@@ -31,14 +33,14 @@ class FileImport implements
 
     public function model(array $row)
     {
-        ++$this->rows;  
+        ++$this->rows;
         return new File([
             'name' => $row['name'],
-            'description' => $row['description'],
-            'confirmed' => $row['confirmed'] == 'Yes' ? 1 : 0,
-            'year' => $row['year'],
-            // 'level_id' => $row['level_id'],
-            'language' => $row['language'],
+            'description' => $row['description'] ?? NULL,
+            'confirmed' => $this->isConfirmed($row['confirmed']),
+            'year' => $row['year'] ?? NULL,
+            'level_id' => $row['level_id'] ?? 0,
+            'language' => $row['language'] ?? Null,
             'file_drive_id' => $row['file_drive_id'], 
         ]);      
     }
@@ -51,9 +53,8 @@ class FileImport implements
     public function rules(): array
     {
         return [
-            '*.file_drive_id' => ['required', 'min:10', 'unique:files,file_drive_id'], // or ['*.1'] if dont have the heading
-            '*.name' => ['required', 'min:5'],
-            // '*.level_id' => ['integer'],
+            '*.file_drive_id' => ['required', 'min:10', 'unique:files,file_drive_id'], 
+            '*.name' => ['required', 'min:5','ends_with:pdf,doc'],
         ];
     }
 
@@ -65,5 +66,18 @@ class FileImport implements
     // {
        
     // }
+
+    // public function onError(\Throwable $e)
+    // {
+    //    
+    // }
+
+    public function isConfirmed($cell){
+        if (strtolower($cell) == 'yes' || $cell == 1 || $cell == true) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
 
 }

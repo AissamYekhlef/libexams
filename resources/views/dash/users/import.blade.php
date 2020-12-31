@@ -15,42 +15,8 @@
                         </div>
                     @endif
 
-                    @if (isset($errors) && $errors->any())
-                        <div class="alert alert-danger">
-                            @foreach ($errors->all() as $error)
-                                {{ $error }}
-                            @endforeach
-                        </div>
-                    @endif
-
-                    @if (session()->has('failures'))
-                        <div class="row justify-content-center text-danger">
-                                <h2>Failures</h2>
-                            </div>
-                        <table class="table table-bordered table-striped table-hover table-danger">
-                            
-                           <tr>
-                               <th>Row</th>
-                               <th>Attribute</th>
-                               <th>Error</th>
-                               <th>Value</th>
-                           </tr>
-                           @foreach (session()->get('failures') as $validation)
-                               <tr>
-                                    <td>{{ $validation->row() }}</td>
-                                    <td>{{ $validation->attribute() }}</td>
-                                    <td>
-                                        <ul>
-                                            @foreach ($validation->errors() as $error)
-                                                <li> {{ $error }} </li>
-                                            @endforeach
-                                        </ul>
-                                    </td>
-                                    <td>{{ $validation->values()[$validation->attribute()] }}</td>
-                               </tr>
-                           @endforeach
-                        </table>
-                    @endif
+                    {{-- Includes the Errors and the Failuers --}}
+                    @include('layouts.imports.errors')
 
                     <form action="{{ route('users.import') }}" method="post" enctype="multipart/form-data">
                         @csrf

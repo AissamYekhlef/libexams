@@ -28,6 +28,8 @@ class UserImport implements
     WithChunkReading
 {
     use Importable, SkipsErrors, SkipsFailures;
+
+    private $rows = 0;
     /**
     * @param array $row
     *
@@ -35,11 +37,16 @@ class UserImport implements
     */
     public function model(array $row)
     {
+        ++$this->rows;
         return new User([
             'name' => $row['name'],
             'email' => $row['email'],
             'password' => Hash::make('password'),
         ]);
+    }
+    public function getRowCount(): int
+    {
+        return $this->rows;
     }
     
     public function rules(): array

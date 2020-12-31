@@ -17,8 +17,10 @@ class UserExportController extends Controller
     }
 
     public function export()
-    {
-        return $this->excel->download(new UserMultiSheetExport(2020), 'users.xlsx');
+    {   
+        return $this->excel->download(new UserExport, 'users.xlsx');
+        // return $this->excel->download(new UserMultiSheetExport(2020), 'users.xlsx');
+       
         // return $this->excel->store(new UserExport, 'users.xlsx', 'google'); //to store on Google Drive
     }
 }

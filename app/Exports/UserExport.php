@@ -30,7 +30,17 @@ class UserExport implements
     private $year;
     private $month;
 
-    public function __construct(int $year, int $month)
+    public function __construct()
+    {
+        $arguments = func_get_args();
+        $numberOfArguments = func_num_args();
+
+        if (method_exists($this, $function = '__construct'.$numberOfArguments)) {
+            call_user_func_array(array($this, $function), $arguments);
+        }
+    }
+
+    public function __construct2(int $year, int $month)
     {
         $this->year = $year;
         $this->month = $month;
@@ -47,9 +57,14 @@ class UserExport implements
 
     public function query()
     {
-        return User::query()->with('files', 'level')
+        if(isset($this->year) && isset($this->month)){
+            return User::query()->with('files', 'level')
                             ->whereYear('created_at', $this->year)
                             ->whereMonth('created_at', $this->month);
+        }else{
+            return User::query()->with('files', 'level');
+        }
+        
     }
 
     public function map($user): array
@@ -91,7 +106,13 @@ class UserExport implements
 
     public function title(): string
     {
-        return DateTime::createFromFormat('!m', $this->month)->format('F');
+        if(isset($this->year) && isset($this->month)){
+            return DateTime::createFromFormat('!m', $this->month)->format('F');
+        }else{
+            return 'All Users';
+        }
     }
+
+
     
 }

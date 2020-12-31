@@ -75,6 +75,7 @@ class FileController extends Controller
             'name' => $filename,
             'file_drive_id' => $fileId,
             // 'confirmed' => auth()->check() ? 1 : 0,
+            'level_id' => 0,
             'created_by' => auth()->check() ? auth()->user()->id : NULL,
         ]);
 
