@@ -21,6 +21,7 @@ class PermissionSeeder extends Seeder
         Permission::firstOrCreate(['name' => 'files.upload']);
         Permission::firstOrCreate(['name' => 'files.export']);
         Permission::firstOrCreate(['name' => 'files.import']);
+        Permission::firstOrCreate(['name' => 'files.*']);
 
         // Users Permissions
         Permission::firstOrCreate(['name' => 'users.view']);
@@ -28,5 +29,6 @@ class PermissionSeeder extends Seeder
         Permission::firstOrCreate(['name' => 'users.delete']);
         Permission::firstOrCreate(['name' => 'users.export']);
         Permission::firstOrCreate(['name' => 'users.import']);
+        Permission::firstOrCreate(['name' => 'users.*']);
     }
 }

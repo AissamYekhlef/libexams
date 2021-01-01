@@ -1,62 +1,41 @@
-@extends('layouts.app')
-
+{{-- @extends('layouts.app') --}}
+{{-- 
 @section('title', 'Users - ')
 
 @section('content')
 
-<div class="container">
+  <div class="container">
 
     <h1>Show All users</h1>
-  
+    
+    @include('dash.users.table')
 
-    @if ($users->count())
-    <div class="container-fluid">
-        <table class="table table-bordered table-striped table-hover">
-           <thead>
-              <tr>
-                  <th>ID</th>
-                  <th>Name</th>
-                  <th>Email</th>
-                  <th>Level</th>
-                  <th>Action</th>
-              </tr>
-            </thead>
-            @foreach ($users as $user)
-              <tr>
-                  <td> {{ $user->id }} </td>
-                  <td> {{ $user->name }} </td>
-                  <td> {{ $user->email }} </td>
-                  <td> {{ $user->level->name ?? '' }} </td>
-                  <td> 
-                    <div class="dropdown">
-                        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                          More
-                          <span class="caret"></span>
-                        </button>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                          <li><a href="{{ route('users.show',     ['user' => $user->id]) }}" class="btn"> Details </a> </li>
-                          <li><a href="{{ route('users.show',     ['user' => $user->id]) }}" class="btn"> Edit </a> </li>
-                          <li><a href="{{ route('users.show',     ['user' => $user->id]) }}" class="btn"> Delete </a> </li>
-                        </ul>
-                      </div>                     
-                            
-                  </td>
-              </tr>
-            @endforeach
-        </table>
-        @if ($users->links())
-        <div class="d-flex justify-content-center fixed-bottom">
-          {{ $users->links()}}
-        </div>
-        @endif
+  </div>
 
-    </div> 
-    @else  
-      <h3>
-          There are no users.
-      </h3>
-    @endif
+@endsection --}}
 
-</div>
+@extends('adminlte::page')
 
-@endsection
+@section('title', 'Dashboard')
+
+@section('css')
+    <link rel="stylesheet" href="{{ asset('css/admin_custom.css') }}">
+@stop
+
+@section('content_header')
+    <h1>Dashboard</h1>
+@stop
+
+@section('content')
+    <p>Welcome to this beautiful admin panel.</p>
+
+    @include('dash.users.table')
+@stop
+
+@section('footer')
+    <p>Welcome to this beautiful admin panel Footer.</p>
+@stop
+
+@section('js')
+    <script> console.log('Hi!'); </script>
+@stop

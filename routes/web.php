@@ -65,6 +65,9 @@ Route::get('files/confirmed', function(){
 /**
  * Users Routes
  */
+
+Route::get('/profile', [UserController::class, 'profile'])->name('users.profile');
+
 Route::group([
     'prefix' => 'admin',
     // 'as' => 'admin.',

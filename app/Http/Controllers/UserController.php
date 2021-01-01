@@ -8,7 +8,11 @@ use Illuminate\Http\Request;
 class UserController extends Controller
 {
     public function __construct(){
-        $this->middleware('admin');
+        $this->middleware('admin',[
+            'except' => [
+                'profile'
+            ]
+        ]);
     }
 
     /**
@@ -94,4 +98,16 @@ class UserController extends Controller
     {
         //
     }
+
+    public function profile()
+    {
+        if(auth()->check()){
+            $user = auth()->user();
+            dd(
+                $user->with('files', 'level')
+            );
+        }
+    }
+
+    
 }
