@@ -43,7 +43,7 @@ class AdminLteServiceProvider extends ServiceProvider
                 [
                     'text'    => 'Upload New File',                 
                     'icon'    => 'fas fa-fw fa-file-upload',   
-                    'classes'   => 'text-success',
+                    'classes' => 'text-success',
                     'route'   => 'files.create',
                     'topnav'  => true,
                 ],
@@ -61,34 +61,34 @@ class AdminLteServiceProvider extends ServiceProvider
                     'icon'    => 'fas fa-fw fa-exchange-alt',  
                     'submenu' => [
                         [
-                            'text' => 'Users',
-                            'can'  => 'users.*',
+                            'text'    => 'Users',
+                            'can'     => 'users.*',
                             'icon'    => 'fas fa-fw fa-users',  
                             'submenu' => [
                                 [
-                                    'text' => 'Export Users',
+                                    'text'   => 'Export Users',
                                     'route'  => 'users.export',
-                                    'icon'    => 'fas fa-fw fa-download',
+                                    'icon'   => 'fas fa-fw fa-download',
                                 ],
                                 [
-                                    'text' => 'Import Users',
+                                    'text'   => 'Import Users',
                                     'route'  => 'users.import',
-                                    'icon'    => 'fas fa-fw fa-file-import',
+                                    'icon'   => 'fas fa-fw fa-file-import',
                                 ],
                             ],
                         ],[
-                            'text' => 'Files',
+                            'text'    => 'Files',
                             'icon'    => 'fas fa-fw fa-file-excel',
                             'submenu' => [
                                 [
-                                    'text' => 'Export Files',
+                                    'text'   => 'Export Files',
                                     'route'  => 'files.export',
-                                    'icon'    => 'fas fa-fw fa-download',
+                                    'icon'   => 'fas fa-fw fa-download',
                                 ],
                                 [
-                                    'text' => 'Import Files',
+                                    'text'   => 'Import Files',
                                     'route'  => 'files.import',
-                                    'icon'    => 'fas fa-fw fa-file-import',
+                                    'icon'   => 'fas fa-fw fa-file-import',
                                 ],
                             ],
                         ],
