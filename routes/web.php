@@ -114,7 +114,7 @@ Route::get('permissions/{role}', function($role){
 
 Route::get('admin', function(){
     return view('admin');
-});
+})->name('admin');
 
 
 Route::get('users/files', function(){
@@ -130,5 +130,7 @@ Route::get('host',function(Request $request){
 });
 Route::get('test',function(){
     $file = File::first();
-    return $file->getLink() ;
+    dd(
+        auth()->user()->avatar()
+    ); 
 });

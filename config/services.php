@@ -34,7 +34,8 @@ return [
     'google' => [
         'client_id' => env('GOOGLE_CLIENT_ID'),
         'client_secret' => env('GOOGLE_CLIENT_SECRET'),
-        'redirect' => $_SERVER['HTTP_HOST'] == 'localhost' 
+        'redirect' => $_SERVER['HTTP_HOST'] == 'localhost' || 
+                      $_SERVER['HTTP_HOST'] == 'libexams.local'
                     ? 'http://localhost/libexams/public/login/google/callback'
                     : 'http://' . $_SERVER['HTTP_HOST'] . '/login/google/callback',
     ],
@@ -42,17 +43,19 @@ return [
     'facebook' => [
         'client_id' => env('FACEBOOK_CLIENT_ID'),
         'client_secret' => env('FACEBOOK_CLIENT_SECRET'),
-        'redirect' => $_SERVER['HTTP_HOST'] == 'localhost' 
+        'redirect' => $_SERVER['HTTP_HOST'] == 'localhost' || 
+                      $_SERVER['HTTP_HOST'] == 'libexams.local'
                     ? 'http://localhost/libexams/public/login/facebook/callback'
-                    : 'http://' . $_SERVER['HTTP_HOST'] . '/login/facebook/callback',
+                    : 'https://' . $_SERVER['HTTP_HOST'] . '/login/facebook/callback',
     ],
 
     'github' => [
         'client_id' => env('GITHUB_CLIENT_ID'),
         'client_secret' => env('GITHUB_CLIENT_SECRET'),
-        'redirect' => $_SERVER['HTTP_HOST'] == 'localhost' 
+        'redirect' => $_SERVER['HTTP_HOST'] == 'localhost' || 
+                      $_SERVER['HTTP_HOST'] == 'libexams.local'
                     ? 'http://localhost/libexams/public/login/github/callback'
-                    : 'http://' . $_SERVER['HTTP_HOST'] . '/login/github/callback',
+                    : 'https://' . $_SERVER['HTTP_HOST'] . '/login/github/callback',
     ],
 
 ];

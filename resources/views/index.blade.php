@@ -55,6 +55,11 @@
                                                     document.getElementById('logout-form').submit();">
                                     {{ __('Logout') }}
                                 </a>
+                                @can('files.*')
+                                    <a class="dropdown-item" href="{{ route('admin') }}">
+                                        {{ __('Dashboard') }}
+                                    </a>
+                                @endcan
 
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                     @csrf

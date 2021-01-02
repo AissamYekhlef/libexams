@@ -57,7 +57,16 @@ class User extends Authenticatable
 
     public function adminlte_image()
     {
-        return Auth::user()->avatar;
+        if (Auth::user()->avatar == '') {
+            return 'https://ui-avatars.com/api/?background=random&name=' . Auth::user()->name;
+        }
+        return  Auth::user()->avatar;
+    }
+
+    
+    public function avatar()
+    {
+        return $this->adminlte_image();
     }
 
     public function adminlte_desc()
