@@ -32,7 +32,7 @@ class FileExport implements
             $file->id,
             $file->name,
             $file->description,
-            $file->getLinkById(),
+            $file->getLink(),
             $file->confirmed ? 'Yes': 'No',
             $file->level ? $file->level->name : 'No Level',
             $file->user ? $file->user->name : 'guest',

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
 
 class File extends Model
 {
@@ -33,8 +34,13 @@ class File extends Model
         return $this->belongsTo(User::class,'created_by', 'id');
     }
 
-    public function getLinkById(){
-        $link = 'http://libexams.local/files/read/' . $this->id;
+    public function getLink(){
+        $host = $_SERVER['HTTP_HOST'];
+        if ($host == 'localhost') {
+            $link = 'http://localhost/public/libexams/files/read/' . $this->id;
+        }else {
+            $link = 'http://' . $host . '/files/read/' . $this->id;
+        }
 
         return $link;
     }

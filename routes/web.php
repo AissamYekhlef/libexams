@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\FileExportController;
 use App\Http\Controllers\FileImportController;
@@ -9,6 +10,7 @@ use App\Http\Controllers\UserExportController;
 use App\Http\Controllers\UserImportController;
 use App\Models\File;
 use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Spatie\Permission\Models\Role;
@@ -32,6 +34,20 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
+
+// Login With Google, Facebbok, Github By Laravel-Socialite
+// Google login
+Route::get('login/google', [LoginController::class, 'redirectToGoogle'])->name('login.google');
+Route::get('login/google/callback', [LoginController::class, 'handleGoogleCallback']);
+
+// Facebook login
+Route::get('login/facebook', [LoginController::class, 'redirectToFacebook'])->name('login.facebook');
+Route::get('login/facebook/callback', [LoginController::class, 'handleFacebookCallback']);
+
+// Github login
+Route::get('login/github', [LoginController::class, 'redirectToGithub'])->name('login.github');
+Route::get('login/github/callback', [LoginController::class, 'handleGithubCallback']);
+
 
 Route::get('/files', [FileController::class, 'index'])->name('files.index');
 Route::get('/bac', function(){
@@ -107,4 +123,12 @@ Route::get('users/files', function(){
         $users
     );
     // return view('files.index')->with('files', $files);
+});
+
+Route::get('host',function(Request $request){
+    return  $request->getHttpHost();
+});
+Route::get('test',function(){
+    $file = File::first();
+    return $file->getLink() ;
 });
