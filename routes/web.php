@@ -96,8 +96,8 @@ Route::get('permissions/{role}', function($role){
     );
 });
 
-Route::get('adminlte', function(){
-    return view('adminlte');
+Route::get('admin', function(){
+    return view('admin');
 });
 
 

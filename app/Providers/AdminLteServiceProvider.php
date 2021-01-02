@@ -30,7 +30,7 @@ class AdminLteServiceProvider extends ServiceProvider
             // Add some items to the menu...
             
             /** Methods od BuildingMenu $event
-             * add(...$newItems)
+             * add(...$newItems)    
              * addAfter($itemKey, ...$newItems)
              * addBefore($itemKey, ...$newItems)
              * addIn($itemKey, ...$newItems)
@@ -95,14 +95,19 @@ class AdminLteServiceProvider extends ServiceProvider
                     ],    
                 ],
             ];
-            $event->menu->addAfter('pages', ...$new_items);
+            $event->menu->addAfter('pages', [
+                'text'   => 'Management',
+                'key'    => 'manage',
+                'icon'   => 'fas fa-fw fa-user-cog',
+            ]);
+            $event->menu->addAfter('manage', ...$new_items);
 
             // $event->menu->add('MAIN NAVIGATION');
             // $event->menu->add([
             //     'text' => 'Blog',
             //     'url' => 'admin/blog',
             // ]);
-            $event->menu->addIn('pages', [
+            $event->menu->addIn('manage', [
                     'text'    => 'Manage Users',     
                     'icon'    => 'fas fa-fw fa-users',  
                     'can'     => 'users.*',                

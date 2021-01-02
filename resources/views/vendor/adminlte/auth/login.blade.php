@@ -24,6 +24,16 @@
     <form action="{{ $login_url }}" method="post">
         {{ csrf_field() }}
 
+        <div class="form-group row">
+            <div class="col-md-12 .col-md-offset-3">
+                <a href="{{ route('login.google') }}" class="btn btn-danger btn-block">Login with Google</a>
+                <a href="{{ route('login.facebook') }}" class="btn btn-primary btn-block">Login with Facebook</a>
+                <a href="{{ route('login.github') }}" class="btn btn-dark btn-block">Login with Github</a>
+            </div>
+        </div>
+
+        <p style="text-align: center">OR</p>
+
         {{-- Email field --}}
         <div class="input-group mb-3">
             <input type="email" name="email" class="form-control {{ $errors->has('email') ? 'is-invalid' : '' }}"

@@ -16,7 +16,7 @@ return [
 
     'title' => 'LibExams',
     'title_prefix' => '',
-    'title_postfix' => '',
+    'title_postfix' => 'LibExams',
 
     /*
     |--------------------------------------------------------------------------
@@ -50,7 +50,7 @@ return [
     'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_xl' => null,
     'logo_img_xl_class' => 'brand-image-xs',
-    'logo_img_alt' => 'Mobidal_logo',
+    'logo_img_alt' => 'LibExams_logo',
 
     /*
     |--------------------------------------------------------------------------
@@ -233,6 +233,7 @@ return [
     'menu' => [
         [
             'text' => 'search',
+            'required' => true,
             'search' => true,
             'topnav' => true,
         ],

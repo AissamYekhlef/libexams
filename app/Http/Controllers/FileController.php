@@ -29,10 +29,19 @@ class FileController extends Controller
         $this->define_google_client();
     }
 
-    public function index(){
+    public function index(Request $request){
 
-        // $files = File::where('confirmed', 1)->paginate(4);
-        $files = File::paginate(8);
+        $search = $request->q;
+        if(isset($search)){
+            
+            // $files = File::where('confirmed', 1)->paginate(4);
+            $files = File::where('name', 'like', '%' . $request->q . '%')->paginate(8);
+            $files->appends(['q' => $search]);
+        
+        }else{
+            $files = File::paginate(8);
+        }
+        
 
         return view('files.index')->with('files', $files);
     }
