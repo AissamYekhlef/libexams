@@ -1,10 +1,13 @@
 {
     "name": "mobidal/laravel-libexams",
     "type": "project",
-    "description": "The Laravel Framework.",
+    "description": "The Library of Exams.",
     "keywords": [
         "framework",
-        "laravel"
+        "laravel",
+        "LibExams",
+        "exams",
+        "library"
     ],
     "license": "MIT",
     "require": {
